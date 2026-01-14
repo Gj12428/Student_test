@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { BookOpen, ArrowLeft, Calendar, Clock, ArrowRight } from "lucide-react"
-import Footer from "@/components/footer"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { BookOpen, ArrowLeft, Calendar, Clock, ArrowRight } from "lucide-react";
+import Footer from "@/components/footer";
 
 const posts = [
   {
@@ -18,7 +18,8 @@ const posts = [
   {
     slug: "top-10-tips-crack-hssc-cet-first-attempt",
     title: "Top 10 Tips to Crack HSSC CET in First Attempt",
-    excerpt: "Learn proven strategies from toppers who cleared HSSC CET with flying colors. Expert tips inside!",
+    excerpt:
+      "Learn proven strategies from toppers who cleared HSSC CET with flying colors. Expert tips inside!",
     date: "Dec 10, 2025",
     readTime: "6 min read",
     category: "Tips & Tricks",
@@ -27,7 +28,8 @@ const posts = [
   {
     slug: "important-current-affairs-hssc-cet-2026",
     title: "Important Current Affairs for HSSC CET 2026",
-    excerpt: "Stay updated with the most important current affairs topics expected in HSSC CET 2026 examination.",
+    excerpt:
+      "Stay updated with the most important current affairs topics expected in HSSC CET 2026 examination.",
     date: "Dec 5, 2025",
     readTime: "10 min read",
     category: "Current Affairs",
@@ -36,7 +38,8 @@ const posts = [
   {
     slug: "haryana-gk-districts-history-culture",
     title: "Haryana GK: Districts, History & Culture",
-    excerpt: "Complete guide to Haryana General Knowledge covering districts, history, culture, and important facts.",
+    excerpt:
+      "Complete guide to Haryana General Knowledge covering districts, history, culture, and important facts.",
     date: "Nov 28, 2025",
     readTime: "12 min read",
     category: "Haryana GK",
@@ -45,7 +48,8 @@ const posts = [
   {
     slug: "math-shortcuts-hssc-cet-quick-calculation-tricks",
     title: "Math Shortcuts for HSSC CET: Quick Calculation Tricks",
-    excerpt: "Master these mathematical shortcuts to solve quantitative aptitude questions faster in HSSC CET.",
+    excerpt:
+      "Master these mathematical shortcuts to solve quantitative aptitude questions faster in HSSC CET.",
     date: "Nov 20, 2025",
     readTime: "7 min read",
     category: "Mathematics",
@@ -54,13 +58,14 @@ const posts = [
   {
     slug: "english-grammar-rules-hssc-aspirant",
     title: "English Grammar Rules Every HSSC Aspirant Must Know",
-    excerpt: "Essential English grammar rules and common errors to avoid in HSSC CET English section.",
+    excerpt:
+      "Essential English grammar rules and common errors to avoid in HSSC CET English section.",
     date: "Nov 15, 2025",
     readTime: "9 min read",
     category: "English",
     image: "/english-grammar-book-learning.jpg",
   },
-]
+];
 
 export default function BlogPage() {
   return (
@@ -94,7 +99,8 @@ export default function BlogPage() {
             HSSC CET <span className="text-primary">Blog</span>
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            Expert tips, exam strategies, and study resources to help you ace the HSSC CET exam.
+            Expert tips, exam strategies, and study resources to help you ace
+            the HSSC CET exam.
           </p>
         </div>
       </section>
@@ -108,15 +114,23 @@ export default function BlogPage() {
                 key={index}
                 className="border-border bg-card hover:shadow-lg transition-all hover:-translate-y-1 overflow-hidden"
               >
-                <img src={post.image || "/placeholder.svg"} alt={post.title} className="w-full h-48 object-cover" />
+                <img
+                  src={post.image || "/placeholder.svg"}
+                  alt={post.title}
+                  className="w-full h-48 object-cover"
+                />
                 <CardHeader className="pb-2">
                   <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-full w-fit">
                     {post.category}
                   </span>
                 </CardHeader>
                 <CardContent>
-                  <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2">{post.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{post.excerpt}</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2 line-clamp-2">
+                    {post.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                    {post.excerpt}
+                  </p>
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
@@ -142,5 +156,5 @@ export default function BlogPage() {
 
       <Footer />
     </div>
-  )
+  );
 }

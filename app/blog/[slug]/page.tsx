@@ -1,19 +1,19 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { BookOpen, ArrowLeft, Calendar, Clock, User } from "lucide-react"
-import Footer from "@/components/footer"
-import { notFound } from "next/navigation"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { BookOpen, ArrowLeft, Calendar, Clock, User } from "lucide-react";
+import Footer from "@/components/footer";
+import { notFound } from "next/navigation";
 
 const posts: Record<
   string,
   {
-    title: string
-    content: string
-    date: string
-    readTime: string
-    category: string
-    image: string
-    author: string
+    title: string;
+    content: string;
+    date: string;
+    readTime: string;
+    category: string;
+    image: string;
+    author: string;
   }
 > = {
   "hssc-cet-2026-complete-syllabus-exam-pattern": {
@@ -332,14 +332,18 @@ const posts: Record<
       </ul>
     `,
   },
-}
+};
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const post = posts[slug]
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = posts[slug];
 
   if (!post) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -370,10 +374,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <article className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           {/* Category Badge */}
-          <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">{post.category}</span>
+          <span className="text-sm font-medium text-primary bg-primary/10 px-3 py-1 rounded-full">
+            {post.category}
+          </span>
 
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mt-4 mb-4">{post.title}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mt-4 mb-4">
+            {post.title}
+          </h1>
 
           {/* Meta Info */}
           <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-8">
@@ -406,9 +414,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           {/* CTA */}
           <div className="mt-12 p-6 bg-primary/5 rounded-xl border border-primary/20">
-            <h3 className="text-xl font-semibold text-foreground mb-2">Ready to Start Practicing?</h3>
+            <h3 className="text-xl font-semibold text-foreground mb-2">
+              Ready to Start Practicing?
+            </h3>
             <p className="text-muted-foreground mb-4">
-              Join thousands of students preparing for HSSC CET with our comprehensive test series.
+              Join thousands of students preparing for HSSC CET with our
+              comprehensive test series.
             </p>
             <Link href="/register">
               <Button>Start Free Trial</Button>
@@ -419,5 +430,5 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
       <Footer />
     </div>
-  )
+  );
 }

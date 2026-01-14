@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Sparkles } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 export default function CTASection() {
   return (
@@ -17,21 +17,26 @@ export default function CTASection() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 mb-6">
           <Sparkles className="w-4 h-4 text-primary-foreground" />
-          <span className="text-sm font-medium text-primary-foreground">Start your journey today</span>
+          <span className="text-sm font-medium text-primary-foreground">
+            Start your journey today
+          </span>
         </div>
 
         <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-6 text-balance">
-          Ready to Crack HSSC CET?
+          Ready to Crack CET?
         </h2>
 
         <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-          Join 50,000+ aspirants who are preparing smarter, not harder. Start your free trial today and experience the
-          difference.
+          Join 50,000+ aspirants who are preparing smarter, not harder. Start
+          your free trial today and experience the difference.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
           <Link href="/signup">
-            <Button size="lg" className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 px-8 group">
+            <Button
+              size="lg"
+              className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 px-8 group"
+            >
               Get Started Free
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
@@ -52,5 +57,5 @@ export default function CTASection() {
         </p>
       </div>
     </section>
-  )
+  );
 }

@@ -1,9 +1,16 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { BookOpen, Users, Award, Target, ArrowLeft, CheckCircle } from "lucide-react"
-import Footer from "@/components/footer"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  BookOpen,
+  Users,
+  Award,
+  Target,
+  ArrowLeft,
+  CheckCircle,
+} from "lucide-react";
+import Footer from "@/components/footer";
 
 const team = [
   {
@@ -16,13 +23,14 @@ const team = [
     role: "Co-Founder & CTO",
     initials: "GJ",
   },
-]
+];
 
 const values = [
   {
     icon: Target,
     title: "Mission-Driven",
-    description: "Helping every HSSC CET aspirant achieve their dream government job.",
+    description:
+      "Helping every CET aspirant achieve their dream government job.",
   },
   {
     icon: Award,
@@ -34,7 +42,7 @@ const values = [
     title: "Student-Centric",
     description: "Every feature designed keeping student needs in mind.",
   },
-]
+];
 
 export default function AboutPage() {
   return (
@@ -48,7 +56,7 @@ export default function AboutPage() {
                 <BookOpen className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
-                HSSC CET <span className="text-primary">TEST</span>
+                CET <span className="text-primary">TEST</span>
               </span>
             </Link>
             <Link href="/">
@@ -65,12 +73,13 @@ export default function AboutPage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            About <span className="text-primary">HSSC CET TEST</span>
+            About <span className="text-primary">CET TEST</span>
           </h1>
           <p className="text-xl text-muted-foreground leading-relaxed">
-            We are on a mission to make quality HSSC CET preparation accessible to every aspirant in Haryana. Our
-            platform provides comprehensive test series, detailed analytics, and expert guidance to help you crack the
-            exam with confidence.
+            We are on a mission to make quality CET preparation accessible to
+            every aspirant in India. Our platform provides comprehensive test
+            series, detailed analytics, and expert guidance to help you crack
+            the exam with confidence.
           </p>
         </div>
       </section>
@@ -100,15 +109,22 @@ export default function AboutPage() {
       {/* Values */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-foreground text-center mb-12">Our Core Values</h2>
+          <h2 className="text-3xl font-bold text-foreground text-center mb-12">
+            Our Core Values
+          </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value, index) => (
-              <Card key={index} className="border-border bg-card hover:shadow-lg transition-shadow">
+              <Card
+                key={index}
+                className="border-border bg-card hover:shadow-lg transition-shadow"
+              >
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <value.icon className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">{value.title}</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
+                    {value.title}
+                  </h3>
                   <p className="text-muted-foreground">{value.description}</p>
                 </CardContent>
               </Card>
@@ -120,7 +136,9 @@ export default function AboutPage() {
       {/* Team - Updated to use Avatar component with only 2 members */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-card">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-foreground text-center mb-12">Meet Our Team</h2>
+          <h2 className="text-3xl font-bold text-foreground text-center mb-12">
+            Meet Our Team
+          </h2>
           <div className="flex justify-center gap-16">
             {team.map((member, index) => (
               <div key={index} className="text-center">
@@ -129,7 +147,9 @@ export default function AboutPage() {
                     {member.initials}
                   </AvatarFallback>
                 </Avatar>
-                <h3 className="text-xl font-semibold text-foreground">{member.name}</h3>
+                <h3 className="text-xl font-semibold text-foreground">
+                  {member.name}
+                </h3>
                 <p className="text-muted-foreground">{member.role}</p>
               </div>
             ))}
@@ -140,12 +160,14 @@ export default function AboutPage() {
       {/* Why Choose Us */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-foreground text-center mb-12">Why Choose Us?</h2>
+          <h2 className="text-3xl font-bold text-foreground text-center mb-12">
+            Why Choose Us?
+          </h2>
           <div className="space-y-4">
             {[
               "Exam-pattern questions updated regularly",
               "Detailed performance analytics and insights",
-              "Expert-curated content by HSSC toppers",
+              "Expert-curated content by toppers",
               "Affordable pricing for all students",
               "24/7 doubt support and guidance",
               "Mobile-friendly platform for learning anywhere",
@@ -161,5 +183,5 @@ export default function AboutPage() {
 
       <Footer />
     </div>
-  )
+  );
 }

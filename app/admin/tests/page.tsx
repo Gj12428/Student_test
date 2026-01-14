@@ -1,91 +1,111 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { ChartCard } from "@/components/dashboard/chart-card"
-import { DataTable } from "@/components/dashboard/data-table"
-import { getAllTests, deleteTest, getTestWithQuestions } from "@/lib/actions/admin"
-import { Button } from "@/components/ui/button"
-import { FileText, Users, Clock, Upload, CheckCircle2, Eye, Trash2, AlertTriangle, Loader2 } from "lucide-react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CSVUploadModal } from "@/components/admin/csv-upload-modal"
-import { CustomMockTestModal } from "@/components/admin/custom-mock-test-modal"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { useState, useEffect } from "react";
+import { ChartCard } from "@/components/dashboard/chart-card";
+import { DataTable } from "@/components/dashboard/data-table";
+import {
+  getAllTests,
+  deleteTest,
+  getTestWithQuestions,
+} from "@/lib/actions/admin";
+import { Button } from "@/components/ui/button";
+import {
+  FileText,
+  Users,
+  Clock,
+  Upload,
+  CheckCircle2,
+  Eye,
+  Trash2,
+  AlertTriangle,
+  Loader2,
+} from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CSVUploadModal } from "@/components/admin/csv-upload-modal";
+import { CustomMockTestModal } from "@/components/admin/custom-mock-test-modal";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 export default function AdminTestsPage() {
-  const [tests, setTests] = useState<any[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [showUploadModal, setShowUploadModal] = useState(false)
-  const [showCustomMockModal, setShowCustomMockModal] = useState(false)
-  const [showSuccessToast, setShowSuccessToast] = useState(false)
-  const [newTestTitle, setNewTestTitle] = useState("")
+  const [tests, setTests] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showCustomMockModal, setShowCustomMockModal] = useState(false);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [newTestTitle, setNewTestTitle] = useState("");
 
-  const [selectedTest, setSelectedTest] = useState<any | null>(null)
-  const [selectedTestQuestions, setSelectedTestQuestions] = useState<any[]>([])
-  const [showViewModal, setShowViewModal] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [testToDelete, setTestToDelete] = useState<any | null>(null)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [selectedTest, setSelectedTest] = useState<any | null>(null);
+  const [selectedTestQuestions, setSelectedTestQuestions] = useState<any[]>([]);
+  const [showViewModal, setShowViewModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [testToDelete, setTestToDelete] = useState<any | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    loadTests()
-  }, [])
+    loadTests();
+  }, []);
 
   async function loadTests() {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      const data = await getAllTests()
-      setTests(data)
+      const data = await getAllTests();
+      setTests(data);
     } catch (error) {
-      console.error("Error loading tests:", error)
+      console.error("Error loading tests:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
-  const examTests = tests.filter((t) => t.test_type === "full")
-  const subjectTests = tests.filter((t) => t.test_type === "subject")
-  const topicTests = tests.filter((t) => t.test_type === "topic")
+  const examTests = tests.filter((t) => t.test_type === "full");
+  const subjectTests = tests.filter((t) => t.test_type === "subject");
+  const topicTests = tests.filter((t) => t.test_type === "topic");
 
   const handleTestCreated = async () => {
-    await loadTests()
-    setShowSuccessToast(true)
-    setTimeout(() => setShowSuccessToast(false), 5000)
-  }
+    await loadTests();
+    setShowSuccessToast(true);
+    setTimeout(() => setShowSuccessToast(false), 5000);
+  };
 
   const handleDeleteTest = async () => {
-    if (!testToDelete) return
-    setIsDeleting(true)
+    if (!testToDelete) return;
+    setIsDeleting(true);
     try {
-      const result = await deleteTest(testToDelete.id)
+      const result = await deleteTest(testToDelete.id);
       if (result.success) {
-        setTests((prev) => prev.filter((t) => t.id !== testToDelete.id))
+        setTests((prev) => prev.filter((t) => t.id !== testToDelete.id));
       }
     } catch (error) {
-      console.error("Error deleting test:", error)
+      console.error("Error deleting test:", error);
     } finally {
-      setIsDeleting(false)
-      setShowDeleteModal(false)
-      setTestToDelete(null)
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+      setTestToDelete(null);
     }
-  }
+  };
 
   const handleViewTest = async (test: any) => {
-    setSelectedTest(test)
-    setShowViewModal(true)
+    setSelectedTest(test);
+    setShowViewModal(true);
 
     // Load questions
-    const fullTest = await getTestWithQuestions(test.id)
+    const fullTest = await getTestWithQuestions(test.id);
     if (fullTest) {
-      setSelectedTestQuestions(fullTest.questions || [])
+      setSelectedTestQuestions(fullTest.questions || []);
     }
-  }
+  };
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
-    )
+    );
   }
 
   const testColumns = [
@@ -99,8 +119,8 @@ export default function AdminTestsPage() {
             test.difficulty === "hard"
               ? "bg-destructive/20 text-destructive"
               : test.difficulty === "medium"
-                ? "bg-amber-500/20 text-amber-500"
-                : "bg-accent/20 text-accent"
+              ? "bg-amber-500/20 text-amber-500"
+              : "bg-accent/20 text-accent"
           }`}
         >
           {test.difficulty.charAt(0).toUpperCase() + test.difficulty.slice(1)}
@@ -149,8 +169,8 @@ export default function AdminTestsPage() {
             size="icon"
             className="h-8 w-8 text-muted-foreground hover:text-primary"
             onClick={(e) => {
-              e.stopPropagation()
-              handleViewTest(test)
+              e.stopPropagation();
+              handleViewTest(test);
             }}
           >
             <Eye className="w-4 h-4" />
@@ -160,9 +180,9 @@ export default function AdminTestsPage() {
             size="icon"
             className="h-8 w-8 text-muted-foreground hover:text-destructive"
             onClick={(e) => {
-              e.stopPropagation()
-              setTestToDelete(test)
-              setShowDeleteModal(true)
+              e.stopPropagation();
+              setTestToDelete(test);
+              setShowDeleteModal(true);
             }}
           >
             <Trash2 className="w-4 h-4" />
@@ -170,7 +190,7 @@ export default function AdminTestsPage() {
         </div>
       ),
     },
-  ]
+  ];
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -188,15 +208,27 @@ export default function AdminTestsPage() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Tests Management</h1>
-          <p className="text-muted-foreground mt-1">Create and manage all test series</p>
+          <h1 className="text-3xl font-bold text-foreground">
+            Tests Management
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Create and manage all test series
+          </p>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="gap-2 bg-transparent" onClick={() => setShowCustomMockModal(true)}>
+          <Button
+            variant="outline"
+            className="gap-2 bg-transparent"
+            onClick={() => setShowCustomMockModal(true)}
+          >
             <FileText className="w-4 h-4" />
             Create Mock Test
           </Button>
-          <Button variant="outline" className="gap-2 bg-transparent" onClick={() => setShowUploadModal(true)}>
+          <Button
+            variant="outline"
+            className="gap-2 bg-transparent"
+            onClick={() => setShowUploadModal(true)}
+          >
             <Upload className="w-4 h-4" />
             Upload CSV
           </Button>
@@ -210,7 +242,9 @@ export default function AdminTestsPage() {
             <FileText className="w-7 h-7 text-primary" />
           </div>
           <div>
-            <p className="text-3xl font-bold text-foreground">{examTests.length}</p>
+            <p className="text-3xl font-bold text-foreground">
+              {examTests.length}
+            </p>
             <p className="text-sm text-muted-foreground">Full Length Exams</p>
           </div>
         </div>
@@ -219,7 +253,9 @@ export default function AdminTestsPage() {
             <FileText className="w-7 h-7 text-accent" />
           </div>
           <div>
-            <p className="text-3xl font-bold text-foreground">{subjectTests.length}</p>
+            <p className="text-3xl font-bold text-foreground">
+              {subjectTests.length}
+            </p>
             <p className="text-sm text-muted-foreground">Subject Tests</p>
           </div>
         </div>
@@ -228,7 +264,9 @@ export default function AdminTestsPage() {
             <FileText className="w-7 h-7 text-amber-500" />
           </div>
           <div>
-            <p className="text-3xl font-bold text-foreground">{topicTests.length}</p>
+            <p className="text-3xl font-bold text-foreground">
+              {topicTests.length}
+            </p>
             <p className="text-sm text-muted-foreground">Topic Tests</p>
           </div>
         </div>
@@ -238,20 +276,34 @@ export default function AdminTestsPage() {
       <Tabs defaultValue="all" className="space-y-6">
         <TabsList>
           <TabsTrigger value="all">All Tests ({tests.length})</TabsTrigger>
-          <TabsTrigger value="exam">Full Exams ({examTests.length})</TabsTrigger>
-          <TabsTrigger value="subject">Subject ({subjectTests.length})</TabsTrigger>
+          <TabsTrigger value="exam">
+            Full Exams ({examTests.length})
+          </TabsTrigger>
+          <TabsTrigger value="subject">
+            Subject ({subjectTests.length})
+          </TabsTrigger>
           <TabsTrigger value="topic">Topic ({topicTests.length})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all">
           <ChartCard title="All Tests">
-            <DataTable data={tests} searchKey="title" pageSize={10} columns={testColumns} />
+            <DataTable
+              data={tests}
+              searchKey="title"
+              pageSize={10}
+              columns={testColumns}
+            />
           </ChartCard>
         </TabsContent>
 
         <TabsContent value="exam">
           <ChartCard title="Full Length Exams">
-            <DataTable data={examTests} searchKey="title" pageSize={10} columns={testColumns} />
+            <DataTable
+              data={examTests}
+              searchKey="title"
+              pageSize={10}
+              columns={testColumns}
+            />
           </ChartCard>
         </TabsContent>
 
@@ -302,12 +354,16 @@ export default function AdminTestsPage() {
         </TabsContent>
       </Tabs>
 
-      <CSVUploadModal open={showUploadModal} onOpenChange={setShowUploadModal} onTestCreated={handleTestCreated} />
+      <CSVUploadModal
+        open={showUploadModal}
+        onOpenChange={setShowUploadModal}
+        onTestCreated={handleTestCreated}
+      />
       <CustomMockTestModal
         isOpen={showCustomMockModal}
         onClose={() => {
-          setShowCustomMockModal(false)
-          loadTests()
+          setShowCustomMockModal(false);
+          loadTests();
         }}
       />
 
@@ -320,7 +376,8 @@ export default function AdminTestsPage() {
               {selectedTest?.title}
             </DialogTitle>
             <DialogDescription>
-              {selectedTest?.questions_count} questions | {selectedTest?.duration} min | {selectedTest?.difficulty}{" "}
+              {selectedTest?.questions_count} questions |{" "}
+              {selectedTest?.duration} min | {selectedTest?.difficulty}{" "}
               difficulty
             </DialogDescription>
           </DialogHeader>
@@ -332,7 +389,9 @@ export default function AdminTestsPage() {
                 <div>
                   <p className="text-xs text-muted-foreground">Category</p>
                   <p className="font-medium capitalize">
-                    {selectedTest.test_type === "full" ? "Full Exam" : selectedTest.test_type}
+                    {selectedTest.test_type === "full"
+                      ? "Full Exam"
+                      : selectedTest.test_type}
                   </p>
                 </div>
                 {selectedTest.subject && (
@@ -349,7 +408,9 @@ export default function AdminTestsPage() {
                 )}
                 <div>
                   <p className="text-xs text-muted-foreground">Attempts</p>
-                  <p className="font-medium">{selectedTest.attempts_count || 0}</p>
+                  <p className="font-medium">
+                    {selectedTest.attempts_count || 0}
+                  </p>
                 </div>
               </div>
 
@@ -358,19 +419,24 @@ export default function AdminTestsPage() {
                 <div className="space-y-4">
                   <h3 className="font-semibold text-foreground">Questions</h3>
                   {selectedTestQuestions.map((q, idx) => (
-                    <div key={q.id} className="bg-card border border-border rounded-xl p-4">
+                    <div
+                      key={q.id}
+                      className="bg-card border border-border rounded-xl p-4"
+                    >
                       <div className="flex items-start gap-3 mb-3">
                         <span className="w-7 h-7 rounded-full bg-primary/20 text-primary flex items-center justify-center text-sm font-bold flex-shrink-0">
                           {idx + 1}
                         </span>
-                        <p className="text-foreground font-medium">{q.question_text}</p>
+                        <p className="text-foreground font-medium">
+                          {q.question_text}
+                        </p>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ml-10">
                         {["a", "b", "c", "d"].map((opt) => {
-                          const optionKey = `option_${opt}` as keyof typeof q
-                          const optionValue = q[optionKey] as string
-                          if (!optionValue) return null
-                          const isCorrect = q.correct_answer === opt
+                          const optionKey = `option_${opt}` as keyof typeof q;
+                          const optionValue = q[optionKey] as string;
+                          if (!optionValue) return null;
+                          const isCorrect = q.correct_answer === opt;
                           return (
                             <div
                               key={opt}
@@ -382,20 +448,26 @@ export default function AdminTestsPage() {
                             >
                               <span
                                 className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
-                                  isCorrect ? "bg-accent text-accent-foreground" : "bg-muted-foreground/20"
+                                  isCorrect
+                                    ? "bg-accent text-accent-foreground"
+                                    : "bg-muted-foreground/20"
                                 }`}
                               >
                                 {opt.toUpperCase()}
                               </span>
                               <span className="flex-1">{optionValue}</span>
-                              {isCorrect && <CheckCircle2 className="w-4 h-4" />}
+                              {isCorrect && (
+                                <CheckCircle2 className="w-4 h-4" />
+                              )}
                             </div>
-                          )
+                          );
                         })}
                       </div>
                       {q.explanation && (
                         <div className="mt-2 ml-10 p-2 bg-amber-500/10 rounded-lg">
-                          <p className="text-xs text-amber-700 dark:text-amber-400">{q.explanation}</p>
+                          <p className="text-xs text-amber-700 dark:text-amber-400">
+                            {q.explanation}
+                          </p>
                         </div>
                       )}
                     </div>
@@ -421,21 +493,35 @@ export default function AdminTestsPage() {
               Delete Test
             </DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete &quot;{testToDelete?.title}&quot;? This action cannot be undone.
+              Are you sure you want to delete &quot;{testToDelete?.title}&quot;?
+              This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
 
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setShowDeleteModal(false)} className="bg-transparent">
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteModal(false)}
+              className="bg-transparent"
+            >
               Cancel
             </Button>
-            <Button variant="destructive" onClick={handleDeleteTest} disabled={isDeleting} className="gap-2">
-              {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+            <Button
+              variant="destructive"
+              onClick={handleDeleteTest}
+              disabled={isDeleting}
+              className="gap-2"
+            >
+              {isDeleting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Trash2 className="w-4 h-4" />
+              )}
               Delete Test
             </Button>
           </div>
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }

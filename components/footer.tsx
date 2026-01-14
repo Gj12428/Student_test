@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { BookOpen, Mail, Phone } from "lucide-react"
+import Link from "next/link";
+import { BookOpen, Mail, Phone } from "lucide-react";
 
 const footerLinks = {
   product: [
@@ -19,7 +19,7 @@ const footerLinks = {
     { name: "Terms of Service", href: "/terms-of-service" },
     { name: "Refund Policy", href: "/refund-policy" },
   ],
-}
+};
 
 export default function Footer() {
   return (
@@ -33,11 +33,11 @@ export default function Footer() {
                 <BookOpen className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
-                HSSC CET <span className="text-primary">TEST</span>
+                CET <span className="text-primary">TEST</span>
               </span>
             </Link>
             <p className="text-muted-foreground text-sm mb-4">
-              India's leading test series platform for HSSC CET preparation.
+              India's leading test series platform for CET preparation.
             </p>
             <div className="space-y-2">
               <a
@@ -111,7 +111,9 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2026 HSSC CET TEST. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            © 2026 CET TEST. All rights reserved.
+          </p>
           <div className="flex gap-4">
             <a
               href="https://instagram.com/jaglan2"
@@ -128,5 +130,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

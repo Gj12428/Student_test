@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { StatsCard } from "@/components/dashboard/stats-card"
-import { ChartCard } from "@/components/dashboard/chart-card"
-import { getAdminAnalytics } from "@/lib/actions/admin"
-import { TrendingUp, Target, Award, CheckCircle, Loader2 } from "lucide-react"
+import { useState, useEffect } from "react";
+import { StatsCard } from "@/components/dashboard/stats-card";
+import { ChartCard } from "@/components/dashboard/chart-card";
+import { getAdminAnalytics } from "@/lib/actions/admin";
+import { TrendingUp, Target, Award, CheckCircle, Loader2 } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -22,61 +22,72 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-} from "recharts"
+} from "recharts";
 
-const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"]
+const COLORS = [
+  "#10b981",
+  "#3b82f6",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#ec4899",
+];
 
 interface AnalyticsData {
-  averageScore: number
-  passRate: number
-  completionRate: number
-  totalAttempts: number
-  weeklyActivity: Array<{ day: string; attempts: number; users: number }>
-  scoreDistribution: Array<{ range: string; count: number }>
-  subjectPerformance: Array<{ subject: string; avgScore: number }>
-  monthlySignups: Array<{ month: string; count: number }>
-  testAttemptsByCategory: Array<{ category: string; attempts: number }>
+  averageScore: number;
+  passRate: number;
+  completionRate: number;
+  totalAttempts: number;
+  weeklyActivity: Array<{ day: string; attempts: number; users: number }>;
+  scoreDistribution: Array<{ range: string; count: number }>;
+  subjectPerformance: Array<{ subject: string; avgScore: number }>;
+  monthlySignups: Array<{ month: string; count: number }>;
+  testAttemptsByCategory: Array<{ category: string; attempts: number }>;
 }
 
 export default function AdminAnalyticsPage() {
-  const [data, setData] = useState<AnalyticsData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadAnalytics() {
       try {
-        console.log("[v0] Loading analytics...")
-        const analytics = await getAdminAnalytics()
-        console.log("[v0] Analytics loaded:", analytics)
-        setData(analytics)
+        console.log("[v0] Loading analytics...");
+        const analytics = await getAdminAnalytics();
+        console.log("[v0] Analytics loaded:", analytics);
+        setData(analytics);
       } catch (error) {
-        console.error("[v0] Error loading analytics:", error)
-        setError(error instanceof Error ? error.message : "Failed to load analytics")
+        console.error("[v0] Error loading analytics:", error);
+        setError(
+          error instanceof Error ? error.message : "Failed to load analytics"
+        );
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
     }
-    loadAnalytics()
-  }, [])
+    loadAnalytics();
+  }, []);
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
-    )
+    );
   }
 
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <p className="text-destructive text-lg font-semibold mb-2">Error loading analytics</p>
+          <p className="text-destructive text-lg font-semibold mb-2">
+            Error loading analytics
+          </p>
           <p className="text-muted-foreground text-sm">{error}</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!data) {
@@ -84,14 +95,18 @@ export default function AdminAnalyticsPage() {
       <div className="text-center py-12">
         <p className="text-muted-foreground">No analytics data available</p>
       </div>
-    )
+    );
   }
 
   return (
     <div className="space-y-6 lg:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
-        <h1 className="text-2xl lg:text-3xl font-bold text-foreground">Analytics Dashboard</h1>
-        <p className="text-sm lg:text-base text-muted-foreground mt-1">Detailed insights into platform performance</p>
+        <h1 className="text-2xl lg:text-3xl font-bold text-foreground">
+          Analytics Dashboard
+        </h1>
+        <p className="text-sm lg:text-base text-muted-foreground mt-1">
+          Detailed insights into platform performance
+        </p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
@@ -143,8 +158,19 @@ export default function AdminAnalyticsPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="#333" />
               <XAxis dataKey="day" stroke="#888" fontSize={11} />
               <YAxis stroke="#888" fontSize={11} />
-              <Tooltip contentStyle={{ backgroundColor: "#1a1a1a", border: "1px solid #333", borderRadius: "8px" }} />
-              <Area type="monotone" dataKey="attempts" stroke="#10b981" fill="url(#colorAttempts)" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1a1a1a",
+                  border: "1px solid #333",
+                  borderRadius: "8px",
+                }}
+              />
+              <Area
+                type="monotone"
+                dataKey="attempts"
+                stroke="#10b981"
+                fill="url(#colorAttempts)"
+              />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -155,10 +181,19 @@ export default function AdminAnalyticsPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="#333" />
               <XAxis dataKey="range" stroke="#888" fontSize={10} />
               <YAxis stroke="#888" fontSize={11} />
-              <Tooltip contentStyle={{ backgroundColor: "#1a1a1a", border: "1px solid #333", borderRadius: "8px" }} />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1a1a1a",
+                  border: "1px solid #333",
+                  borderRadius: "8px",
+                }}
+              />
               <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                 {data.scoreDistribution.map((_, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Bar>
             </BarChart>
@@ -174,8 +209,18 @@ export default function AdminAnalyticsPage() {
               <RadarChart data={data.subjectPerformance}>
                 <PolarGrid stroke="#333" />
                 <PolarAngleAxis dataKey="subject" stroke="#888" fontSize={10} />
-                <PolarRadiusAxis stroke="#888" domain={[0, 100]} fontSize={10} />
-                <Tooltip contentStyle={{ backgroundColor: "#1a1a1a", border: "1px solid #333", borderRadius: "8px" }} />
+                <PolarRadiusAxis
+                  stroke="#888"
+                  domain={[0, 100]}
+                  fontSize={10}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1a1a1a",
+                    border: "1px solid #333",
+                    borderRadius: "8px",
+                  }}
+                />
               </RadarChart>
             </ResponsiveContainer>
           ) : (
@@ -192,7 +237,13 @@ export default function AdminAnalyticsPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                 <XAxis dataKey="month" stroke="#888" fontSize={11} />
                 <YAxis stroke="#888" fontSize={11} />
-                <Tooltip contentStyle={{ backgroundColor: "#1a1a1a", border: "1px solid #333", borderRadius: "8px" }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#1a1a1a",
+                    border: "1px solid #333",
+                    borderRadius: "8px",
+                  }}
+                />
                 <Line
                   type="monotone"
                   dataKey="count"
@@ -222,17 +273,27 @@ export default function AdminAnalyticsPage() {
                 className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl mb-3 lg:mb-4 flex items-center justify-center"
                 style={{ backgroundColor: `${COLORS[idx]}20` }}
               >
-                <Target className="w-5 h-5 lg:w-6 lg:h-6" style={{ color: COLORS[idx] }} />
+                <Target
+                  className="w-5 h-5 lg:w-6 lg:h-6"
+                  style={{ color: COLORS[idx] }}
+                />
               </div>
-              <h4 className="text-base lg:text-lg font-semibold text-foreground">{item.category}</h4>
-              <p className="text-2xl lg:text-3xl font-bold mt-1 lg:mt-2" style={{ color: COLORS[idx] }}>
+              <h4 className="text-base lg:text-lg font-semibold text-foreground">
+                {item.category}
+              </h4>
+              <p
+                className="text-2xl lg:text-3xl font-bold mt-1 lg:mt-2"
+                style={{ color: COLORS[idx] }}
+              >
                 {item.attempts.toLocaleString()}
               </p>
-              <p className="text-xs lg:text-sm text-muted-foreground mt-1">Total Attempts</p>
+              <p className="text-xs lg:text-sm text-muted-foreground mt-1">
+                Total Attempts
+              </p>
             </div>
           ))}
         </div>
       </ChartCard>
     </div>
-  )
+  );
 }

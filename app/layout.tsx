@@ -1,16 +1,16 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter, Geist_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
 
-const _inter = Inter({ subsets: ["latin"] })
-const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const _inter = Inter({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HSSC CET TEST - Ace Your Competitive Exams",
+  title: "CET TEST - Ace Your Competitive Exams",
   description:
-    "India's leading test series platform for HSSC CET preparation. Practice unlimited mock tests, get detailed analytics, and crack your exam with confidence.",
+    "India's leading test series platform for CET preparation. Practice unlimited mock tests, get detailed analytics, and crack your exam with confidence.",
   generator: "v0.app",
   icons: {
     icon: [
@@ -29,12 +29,12 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-icon.png",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -43,5 +43,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

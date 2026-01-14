@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X, BookOpen } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Menu, X, BookOpen } from "lucide-react";
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -14,7 +14,7 @@ export default function Navbar() {
     { name: "Features", href: "#features" },
     { name: "Pricing", href: "#pricing" },
     { name: "FAQs", href: "#faq" },
-  ]
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -26,7 +26,7 @@ export default function Navbar() {
               <BookOpen className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold text-foreground">
-              HSSC CET <span className="text-primary">TEST</span>
+              CET <span className="text-primary">TEST</span>
             </span>
           </Link>
 
@@ -51,7 +51,9 @@ export default function Navbar() {
               </Button>
             </Link>
             <Link href="/signup">
-              <Button className="text-sm bg-primary hover:bg-primary/90">Sign up</Button>
+              <Button className="text-sm bg-primary hover:bg-primary/90">
+                Sign up
+              </Button>
             </Link>
           </div>
 
@@ -93,5 +95,5 @@ export default function Navbar() {
         </div>
       )}
     </nav>
-  )
+  );
 }

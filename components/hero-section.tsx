@@ -1,20 +1,24 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Play, CheckCircle2, Sparkles } from "lucide-react"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Play, CheckCircle2, Sparkles } from "lucide-react";
 
 export default function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true)
-  }, [])
+    setIsVisible(true);
+  }, []);
 
-  const features = ["10,000+ Practice Questions", "Detailed Solutions & Analytics", "Topic-wise & Full Length Tests"]
+  const features = [
+    "10,000+ Practice Questions",
+    "Detailed Solutions & Analytics",
+    "Topic-wise & Full Length Tests",
+  ];
 
   return (
     <section className="pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden relative">
@@ -30,21 +34,29 @@ export default function HeroSection() {
           {/* Left Content */}
           <div
             className={`space-y-8 transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
             }`}
           >
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">#1 Test Series for HSSC CET</span>
+              <span className="text-sm font-medium text-primary">
+                #1 Test Series for CET
+              </span>
             </div>
 
             {/* Heading */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
               Crack Your{" "}
               <span className="text-primary relative">
-                HSSC CET
-                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
+                CET
+                <svg
+                  className="absolute -bottom-2 left-0 w-full"
+                  viewBox="0 0 200 12"
+                  fill="none"
+                >
                   <path
                     d="M2 10C50 4 150 4 198 10"
                     stroke="currentColor"
@@ -59,8 +71,9 @@ export default function HeroSection() {
 
             {/* Description */}
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              India's most comprehensive test series platform designed specifically for HSSC CET aspirants. Practice
-              with real exam patterns and boost your success rate.
+              India's most comprehensive test series platform designed
+              specifically for CET aspirants. Practice with real exam patterns
+              and boost your success rate.
             </p>
 
             {/* Features List */}
@@ -88,7 +101,11 @@ export default function HeroSection() {
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="px-8 group border-border hover:bg-muted bg-transparent">
+              <Button
+                size="lg"
+                variant="outline"
+                className="px-8 group border-border hover:bg-muted bg-transparent"
+              >
                 <Play className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
                 Watch Demo
               </Button>
@@ -98,7 +115,10 @@ export default function HeroSection() {
             <div className="flex items-center gap-6 pt-4">
               <div className="flex -space-x-3">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-background bg-muted overflow-hidden">
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full border-2 border-background bg-muted overflow-hidden"
+                  >
                     <img
                       src={`/indian-student-avatar-.jpg?height=40&width=40&query=indian student avatar ${i}`}
                       alt="Student"
@@ -110,13 +130,18 @@ export default function HeroSection() {
               <div>
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <svg key={i} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 20 20">
+                    <svg
+                      key={i}
+                      className="w-4 h-4 text-yellow-500 fill-current"
+                      viewBox="0 0 20 20"
+                    >
                       <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                     </svg>
                   ))}
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  <span className="font-semibold text-foreground">50,000+</span> students trust us
+                  <span className="font-semibold text-foreground">50,000+</span>{" "}
+                  students trust us
                 </p>
               </div>
             </div>
@@ -125,7 +150,9 @@ export default function HeroSection() {
           {/* Right Content - Hero Image/Illustration */}
           <div
             className={`relative transition-all duration-1000 delay-300 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              isVisible
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 translate-x-10"
             }`}
           >
             <div className="relative">
@@ -147,7 +174,9 @@ export default function HeroSection() {
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-foreground">98%</p>
-                      <p className="text-sm text-muted-foreground">Success Rate</p>
+                      <p className="text-sm text-muted-foreground">
+                        Success Rate
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -170,7 +199,7 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function BookOpen(props: React.SVGProps<SVGSVGElement>) {
@@ -190,5 +219,5 @@ function BookOpen(props: React.SVGProps<SVGSVGElement>) {
       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
       <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
     </svg>
-  )
+  );
 }

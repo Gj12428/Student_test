@@ -1,57 +1,66 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { BookOpen, Eye, EyeOff, Mail, Lock, User, ArrowLeft, Check, AlertCircle } from "lucide-react"
-import { signupUser } from "@/lib/auth-client"
+import type React from "react";
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  BookOpen,
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  ArrowLeft,
+  Check,
+  AlertCircle,
+} from "lucide-react";
+import { signupUser } from "@/lib/auth-client";
 
 export default function SignupPage() {
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     agreeTerms: false,
-  })
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError("")
-    setIsLoading(true)
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
     try {
       const result = await signupUser({
-      full_name: formData.name,
-      email: formData.email,
-      password: formData.password,
-      role: "student", // 👈 student role add
-    })
-
+        full_name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: "student", // 👈 student role add
+      });
 
       if (result.success && result.user) {
-        window.location.href = "/student"
+        window.location.href = "/student";
       } else {
-        setError(result.message)
-        setIsLoading(false)
+        setError(result.message);
+        setIsLoading(false);
       }
     } catch (err) {
-      setError("An error occurred during signup")
-      setIsLoading(false)
+      setError("An error occurred during signup");
+      setIsLoading(false);
     }
-  }
+  };
 
   const passwordRequirements = [
     { text: "At least 8 characters", met: formData.password.length >= 8 },
     { text: "One uppercase letter", met: /[A-Z]/.test(formData.password) },
     { text: "One number", met: /[0-9]/.test(formData.password) },
-  ]
+  ];
 
   return (
     <div className="min-h-screen flex">
@@ -63,9 +72,12 @@ export default function SignupPage() {
         </div>
         <div className="relative z-10 flex flex-col justify-center p-12">
           <div className="max-w-md">
-            <h2 className="text-4xl font-bold text-primary-foreground mb-6">Start Your HSSC CET Preparation Today</h2>
+            <h2 className="text-4xl font-bold text-primary-foreground mb-6">
+              Start Your CET Preparation Today
+            </h2>
             <p className="text-lg text-primary-foreground/80 mb-8">
-              Join thousands of successful candidates who cracked HSSC CET with our comprehensive test series.
+              Join thousands of successful candidates who cracked CET with our
+              comprehensive test series.
             </p>
 
             {/* Benefits */}
@@ -76,7 +88,10 @@ export default function SignupPage() {
                 "Detailed Analytics & Reports",
                 "24/7 Access on All Devices",
               ].map((benefit) => (
-                <div key={benefit} className="flex items-center gap-3 text-primary-foreground">
+                <div
+                  key={benefit}
+                  className="flex items-center gap-3 text-primary-foreground"
+                >
                   <div className="w-6 h-6 rounded-full bg-primary-foreground/20 flex items-center justify-center flex-shrink-0">
                     <Check className="w-4 h-4" />
                   </div>
@@ -106,14 +121,18 @@ export default function SignupPage() {
               <BookOpen className="w-6 h-6 text-primary-foreground" />
             </div>
             <span className="text-2xl font-bold text-foreground">
-              HSSC CET <span className="text-primary">TEST</span>
+              CET <span className="text-primary">TEST</span>
             </span>
           </Link>
 
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Create your account</h1>
-            <p className="text-muted-foreground">Join now and start your preparation instantly</p>
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              Create your account
+            </h1>
+            <p className="text-muted-foreground">
+              Join now and start your preparation instantly
+            </p>
           </div>
 
           {error && (
@@ -135,7 +154,9 @@ export default function SignupPage() {
                   placeholder="Enter your full name"
                   className="pl-10 h-12"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -151,7 +172,9 @@ export default function SignupPage() {
                   placeholder="you@example.com"
                   className="pl-10 h-12"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -167,7 +190,9 @@ export default function SignupPage() {
                   placeholder="Create a strong password"
                   className="pl-10 pr-10 h-12"
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                   required
                 />
                 <button
@@ -175,7 +200,11 @@ export default function SignupPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
 
@@ -185,9 +214,15 @@ export default function SignupPage() {
                   {passwordRequirements.map((req) => (
                     <div
                       key={req.text}
-                      className={`flex items-center gap-2 text-xs ${req.met ? "text-accent" : "text-muted-foreground"}`}
+                      className={`flex items-center gap-2 text-xs ${
+                        req.met ? "text-accent" : "text-muted-foreground"
+                      }`}
                     >
-                      <Check className={`w-3 h-3 ${req.met ? "opacity-100" : "opacity-30"}`} />
+                      <Check
+                        className={`w-3 h-3 ${
+                          req.met ? "opacity-100" : "opacity-30"
+                        }`}
+                      />
                       <span>{req.text}</span>
                     </div>
                   ))}
@@ -200,16 +235,27 @@ export default function SignupPage() {
               <Checkbox
                 id="terms"
                 checked={formData.agreeTerms}
-                onCheckedChange={(checked) => setFormData({ ...formData, agreeTerms: checked as boolean })}
+                onCheckedChange={(checked) =>
+                  setFormData({ ...formData, agreeTerms: checked as boolean })
+                }
                 className="mt-1"
               />
-              <Label htmlFor="terms" className="text-sm text-muted-foreground font-normal leading-relaxed">
+              <Label
+                htmlFor="terms"
+                className="text-sm text-muted-foreground font-normal leading-relaxed"
+              >
                 I agree to the{" "}
-                <Link href="/terms-of-service" className="text-primary hover:underline">
+                <Link
+                  href="/terms-of-service"
+                  className="text-primary hover:underline"
+                >
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy-policy" className="text-primary hover:underline">
+                <Link
+                  href="/privacy-policy"
+                  className="text-primary hover:underline"
+                >
                   Privacy Policy
                 </Link>
               </Label>
@@ -222,9 +268,24 @@ export default function SignupPage() {
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  <svg
+                    className="animate-spin h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
                   </svg>
                   Creating account...
                 </span>
@@ -237,12 +298,15 @@ export default function SignupPage() {
           {/* Login Link */}
           <p className="mt-8 text-center text-muted-foreground">
             Already have an account?{" "}
-            <Link href="/login" className="text-primary font-medium hover:underline">
+            <Link
+              href="/login"
+              className="text-primary font-medium hover:underline"
+            >
               Sign in
             </Link>
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }

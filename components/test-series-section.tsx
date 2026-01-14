@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Clock, FileText, ArrowRight, Star } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Clock, FileText, ArrowRight, Star } from "lucide-react";
 
 const testSeries = [
   {
-    title: "HSSC CET Full Length Tests",
+    title: "CET Full Length Tests",
     description: "Complete mock tests based on actual exam pattern",
     tests: 50,
     questions: 5000,
@@ -28,7 +28,7 @@ const testSeries = [
   },
   {
     title: "Previous Year Papers",
-    description: "Actual questions from past HSSC CET exams",
+    description: "Actual questions from past CET exams",
     tests: 25,
     questions: 2000,
     duration: "90 mins each",
@@ -36,7 +36,7 @@ const testSeries = [
     popular: true,
     color: "bg-chart-3",
   },
-]
+];
 
 export default function TestSeriesSection() {
   return (
@@ -50,7 +50,9 @@ export default function TestSeriesSection() {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
             Choose Your Practice Path
           </h2>
-          <p className="text-lg text-muted-foreground">Multiple test series designed for comprehensive preparation</p>
+          <p className="text-lg text-muted-foreground">
+            Multiple test series designed for comprehensive preparation
+          </p>
         </div>
 
         {/* Test Series Cards */}
@@ -70,10 +72,14 @@ export default function TestSeriesSection() {
                         Popular
                       </Badge>
                     )}
-                    <h3 className="text-xl font-bold text-primary-foreground">{series.title}</h3>
+                    <h3 className="text-xl font-bold text-primary-foreground">
+                      {series.title}
+                    </h3>
                   </div>
                 </div>
-                <p className="text-primary-foreground/80 text-sm mt-2">{series.description}</p>
+                <p className="text-primary-foreground/80 text-sm mt-2">
+                  {series.description}
+                </p>
               </div>
 
               {/* Card Body */}
@@ -82,18 +88,26 @@ export default function TestSeriesSection() {
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">
-                      <span className="font-semibold text-foreground">{series.tests}</span> Tests
+                      <span className="font-semibold text-foreground">
+                        {series.tests}
+                      </span>{" "}
+                      Tests
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-muted-foreground" />
                     <span className="text-sm text-muted-foreground">
-                      <span className="font-semibold text-foreground">{series.questions}</span> Qs
+                      <span className="font-semibold text-foreground">
+                        {series.questions}
+                      </span>{" "}
+                      Qs
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">{series.duration}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {series.duration}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary" className="text-xs">
@@ -114,5 +128,5 @@ export default function TestSeriesSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -1,31 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ChartCard } from "@/components/dashboard/chart-card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Save, Bell, Shield, Mail, User } from "lucide-react"
+import { useState } from "react";
+import { ChartCard } from "@/components/dashboard/chart-card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Save, Bell, Shield, Mail, User } from "lucide-react";
 
 export default function AdminSettingsPage() {
   const adminInfo = {
     name: "Admin",
     email: "anujjaglan9423@gmail.com",
-  }
+  };
 
   const [settings, setSettings] = useState({
     emailNotifications: true,
     pushNotifications: false,
     weeklyReports: true,
     studentAlerts: true,
-  })
+  });
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div>
         <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-        <p className="text-muted-foreground mt-1">Manage your account and platform settings</p>
+        <p className="text-muted-foreground mt-1">
+          Manage your account and platform settings
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -38,8 +40,14 @@ export default function AdminSettingsPage() {
               </div>
               <div>
                 <p className="font-medium text-foreground">{adminInfo.name}</p>
-                <p className="text-sm text-muted-foreground">{adminInfo.email}</p>
-                <Button variant="outline" size="sm" className="mt-2 bg-transparent">
+                <p className="text-sm text-muted-foreground">
+                  {adminInfo.email}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 bg-transparent"
+                >
                   Change Avatar
                 </Button>
               </div>
@@ -74,13 +82,19 @@ export default function AdminSettingsPage() {
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="font-medium text-foreground">Email Notifications</p>
-                  <p className="text-sm text-muted-foreground">Receive updates via email</p>
+                  <p className="font-medium text-foreground">
+                    Email Notifications
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Receive updates via email
+                  </p>
                 </div>
               </div>
               <Switch
                 checked={settings.emailNotifications}
-                onCheckedChange={(checked) => setSettings({ ...settings, emailNotifications: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, emailNotifications: checked })
+                }
               />
             </div>
 
@@ -88,13 +102,19 @@ export default function AdminSettingsPage() {
               <div className="flex items-center gap-3">
                 <Bell className="w-5 h-5 text-accent" />
                 <div>
-                  <p className="font-medium text-foreground">Push Notifications</p>
-                  <p className="text-sm text-muted-foreground">Get browser notifications</p>
+                  <p className="font-medium text-foreground">
+                    Push Notifications
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Get browser notifications
+                  </p>
                 </div>
               </div>
               <Switch
                 checked={settings.pushNotifications}
-                onCheckedChange={(checked) => setSettings({ ...settings, pushNotifications: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, pushNotifications: checked })
+                }
               />
             </div>
 
@@ -103,12 +123,16 @@ export default function AdminSettingsPage() {
                 <Shield className="w-5 h-5 text-amber-500" />
                 <div>
                   <p className="font-medium text-foreground">Weekly Reports</p>
-                  <p className="text-sm text-muted-foreground">Summary of platform activity</p>
+                  <p className="text-sm text-muted-foreground">
+                    Summary of platform activity
+                  </p>
                 </div>
               </div>
               <Switch
                 checked={settings.weeklyReports}
-                onCheckedChange={(checked) => setSettings({ ...settings, weeklyReports: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, weeklyReports: checked })
+                }
               />
             </div>
 
@@ -117,17 +141,21 @@ export default function AdminSettingsPage() {
                 <User className="w-5 h-5 text-destructive" />
                 <div>
                   <p className="font-medium text-foreground">Student Alerts</p>
-                  <p className="text-sm text-muted-foreground">Low activity notifications</p>
+                  <p className="text-sm text-muted-foreground">
+                    Low activity notifications
+                  </p>
                 </div>
               </div>
               <Switch
                 checked={settings.studentAlerts}
-                onCheckedChange={(checked) => setSettings({ ...settings, studentAlerts: checked })}
+                onCheckedChange={(checked) =>
+                  setSettings({ ...settings, studentAlerts: checked })
+                }
               />
             </div>
           </div>
         </ChartCard>
       </div>
     </div>
-  )
+  );
 }
