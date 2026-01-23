@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { getAllTestResults } from "@/lib/actions/admin";
+import { getAllTests } from "@/lib/actions/admin";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
@@ -57,7 +57,7 @@ function ResultsContent() {
 
   const loadResults = async () => {
     setLoading(true);
-    const data = await getAllTestResults();
+    const data = await getAllTests();
     setResults(data);
     setLoading(false);
   };

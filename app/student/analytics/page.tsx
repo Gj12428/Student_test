@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getStudentAnalytics } from "@/lib/actions/student";
+//import { getStudentAnalytics } from "@/lib/actions/student";
+import { getStudentResults } from "@/lib/actions/student";
 import {
   Card,
   CardContent,
@@ -32,7 +33,7 @@ export default function StudentAnalyticsPage() {
     const loadData = async () => {
       try {
         setLoading(true);
-        const data = await getStudentAnalytics();
+        const data = await getStudentResults();
         if (data) {
           setAnalytics(data);
         } else {

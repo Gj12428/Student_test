@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { Question } from "@/lib/types/question"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,16 +30,16 @@ import {
 } from "lucide-react"
 import { getPracticeQuestions } from "@/lib/actions/student"
 
-interface Question {
-  id: string
-  question_text: string
-  option_a: string
-  option_b: string
-  option_c: string
-  option_d: string
-  correct_answer: string
-  explanation: string
-}
+// interface Question {
+//   id: string
+//   question_text: string
+//   option_a: string
+//   option_b: string
+//   option_c: string
+//   option_d: string
+//   correct_answer: string
+//   explanation: string
+// }
 
 interface PracticeSettings {
   subjectId: string
@@ -59,6 +61,8 @@ export default function PracticeStartPage() {
   const [timeRemaining, setTimeRemaining] = useState(0)
   const [showExitDialog, setShowExitDialog] = useState(false)
   const [showAnswer, setShowAnswer] = useState(false)
+  //const [questions, setQuestions] = useState<Question[]>([])
+
 
   useEffect(() => {
     const savedSettings = sessionStorage.getItem("practiceSettings")

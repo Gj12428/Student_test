@@ -90,26 +90,31 @@ function ManageContent() {
     loadAllData();
   }, []);
 
-  async function loadAllData() {
-    setIsLoading(true);
-    try {
-      const [categoriesData, examsData, subjectsData, topicsData] =
-        await Promise.all([
-          getExamCategories(),
-          getAllExams(),
-          getAllSubjects(),
-          getAllTopics(),
-        ]);
-      setCategories(categoriesData || []);
-      setExams(examsData || []);
-      setSubjects(subjectsData || []);
-      setTopics(topicsData || []);
-    } catch (error) {
-      console.error("Error loading data:", error);
-    } finally {
-      setIsLoading(false);
-    }
+
+
+ async function loadAllData() {
+  setIsLoading(true);
+  try {
+    const [categoriesData, examsData, subjectsData, topicsData] =
+      await Promise.all([
+        getExamCategories(),
+        getAllExams(),
+        getAllSubjects(),
+        getAllTopics(),
+      ]);
+
+    setCategories(categoriesData);
+    setExams(Array.isArray(examsData) ? examsData : []);
+    setSubjects(Array.isArray(subjectsData) ? subjectsData : []);
+    setTopics(Array.isArray(topicsData) ? topicsData : []);
+
+  } catch (error) {
+    console.error("Error loading data:", error);
+  } finally {
+    setIsLoading(false);
   }
+}
+
 
   const resetForm = () => {
     setFormData({
@@ -162,11 +167,13 @@ function ManageContent() {
           });
           break;
         case "exams":
-          result = await createExam(
-            formData.name,
-            formData.description,
-            formData.categoryId || undefined
-          );
+          result = await createExam({
+            name: formData.name,
+            description: formData.description,
+            category_id: formData.categoryId
+              ? Number(formData.categoryId)
+              : null,
+          });
           break;
         case "subjects":
           result = await createSubject(formData.name, formData.examId);
@@ -206,21 +213,30 @@ function ManageContent() {
           result = await updateExam(editItem.id, {
             name: formData.name,
             description: formData.description,
-            category_id: formData.categoryId || null,
+            category_id: formData.categoryId
+              ? Number(formData.categoryId)
+              : null,
           });
+          break;
+
           break;
         case "subjects":
-          result = await updateSubject(editItem.id, {
-            name: formData.name,
-            exam_id: formData.examId,
-          });
-          break;
+  result = await updateSubject(editItem.id, {
+    name: formData.name,
+    exam_id: formData.examId
+      ? Number(formData.examId)
+      : null,
+  });
+  break;
+
         case "topics":
-          result = await updateTopic(editItem.id, {
-            name: formData.name,
-            subject_id: formData.subjectId,
-          });
-          break;
+  result = await updateTopic(editItem.id, {
+    name: formData.name,
+    subject_id: formData.subjectId
+      ? Number(formData.subjectId)
+      : null,
+  });
+  break;
       }
 
       if (result?.success) {

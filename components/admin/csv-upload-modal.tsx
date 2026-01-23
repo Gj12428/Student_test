@@ -55,6 +55,14 @@ interface Question {
   examSource?: string;
 }
 
+import type {
+  Category,
+  Exam,
+  Subject,
+  Topic,
+  ExamsSubjectsTopicsResponse,
+} from "@/lib/actions/admin";
+
 interface CSVUploadModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -79,10 +87,11 @@ export function CSVUploadModal({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Data from database
-  const [categories, setCategories] = useState<any[]>([]);
-  const [exams, setExams] = useState<any[]>([]);
-  const [subjects, setSubjects] = useState<any[]>([]);
-  const [topics, setTopics] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+const [exams, setExams] = useState<Exam[]>([]);
+const [subjects, setSubjects] = useState<Subject[]>([]);
+const [topics, setTopics] = useState<Topic[]>([]);
+
 
   // Configuration state
   const [testTitle, setTestTitle] = useState("");
@@ -123,16 +132,19 @@ export function CSVUploadModal({
   }, [open]);
 
   async function loadData() {
-    try {
-      const data = await getExamsSubjectsTopics();
-      setCategories(data.categories || []);
-      setExams(data.exams);
-      setSubjects(data.subjects);
-      setTopics(data.topics);
-    } catch (error) {
-      console.error("Error loading data:", error);
-    }
+  try {
+    const data: ExamsSubjectsTopicsResponse =
+      await getExamsSubjectsTopics();
+
+    setCategories(data.categories ?? []);
+    setExams(data.exams ?? []);
+    setSubjects(data.subjects ?? []);
+    setTopics(data.topics ?? []);
+  } catch (error) {
+    console.error("Error loading data:", error);
   }
+}
+
 
   const resetState = () => {
     setStep("upload");
@@ -150,19 +162,24 @@ export function CSVUploadModal({
     setCurrentPage(1);
   };
 
-  const filteredExams = exams.filter(
-    (e) => !selectedCategoryId || e.category_id === selectedCategoryId
-  );
+const filteredExams = exams.filter(
+  (e) =>
+    !selectedCategoryId ||
+    String(e.category_id) === String(selectedCategoryId)
+);
 
-  // Filter subjects by exam
-  const filteredSubjects = subjects.filter(
-    (s) => !selectedExamId || s.exam_id === selectedExamId
-  );
+const filteredSubjects = subjects.filter(
+  (s) =>
+    !selectedExamId ||
+    String(s.exam_id) === String(selectedExamId)
+);
 
-  // Filter topics by subject
-  const filteredTopics = topics.filter(
-    (t) => !selectedSubjectId || t.subject_id === selectedSubjectId
-  );
+const filteredTopics = topics.filter(
+  (t) =>
+    !selectedSubjectId ||
+    String(t.subject_id) === String(selectedSubjectId)
+);
+
 
   const parseCSV = (text: string): Question[] => {
     const lines = text.split("\n").filter((line) => line.trim());
@@ -423,16 +440,30 @@ export function CSVUploadModal({
     if (!newExamName.trim()) return;
     setIsAddingExam(true);
     try {
-      const result = await createExam(
-        newExamName.trim(),
-        selectedCategoryId || undefined
-      );
+     const result = await createExam({
+  name: newExamName.trim(),
+  category_id: selectedCategoryId
+    ? Number(selectedCategoryId)
+    : null,
+});
+
       if (result.success && result.data) {
-        setExams([...exams, result.data]);
-        setSelectedExamId(result.data.id);
-        setNewExamName("");
-        setShowAddExam(false);
-      }
+  setExams((prev) => [
+    ...prev,
+    {
+      id: String(result.data.id),
+      name: result.data.name,
+      category_id: String(
+        result.data.category_id ?? selectedCategoryId
+      ),
+    },
+  ]);
+
+  setSelectedExamId(String(result.data.id));
+  setNewExamName("");
+  setShowAddExam(false);
+}
+
     } catch (error) {
       console.error("Error adding exam:", error);
     } finally {

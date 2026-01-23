@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { ChartCard } from "@/components/dashboard/chart-card";
 import { DataTable } from "@/components/dashboard/data-table";
-import { getAllStudents } from "@/lib/actions/admin";
+import { getAvailableTests } from "@/lib/actions/student";
+
 import { Button } from "@/components/ui/button";
 import { Download, Eye, Mail, Phone, Loader2 } from "lucide-react";
 import {
@@ -22,7 +23,7 @@ export default function AdminStudentsPage() {
     async function loadStudents() {
       setIsLoading(true);
       try {
-        const data = await getAllStudents();
+        const data = await getAvailableTests();
         setStudents(data);
       } catch (error) {
         console.error("Error loading students:", error);
