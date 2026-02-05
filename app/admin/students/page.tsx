@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ChartCard } from "@/components/dashboard/chart-card";
 import { DataTable } from "@/components/dashboard/data-table";
 import { getAvailableTests } from "@/lib/actions/student";
+import { getAllStudents } from "@/lib/actions/admin";
 
 import { Button } from "@/components/ui/button";
 import { Download, Eye, Mail, Phone, Loader2 } from "lucide-react";
@@ -23,7 +24,8 @@ export default function AdminStudentsPage() {
     async function loadStudents() {
       setIsLoading(true);
       try {
-        const data = await getAvailableTests();
+        //const data = await getAvailableTests();
+        const data = await getAllStudents();
         setStudents(data);
       } catch (error) {
         console.error("Error loading students:", error);

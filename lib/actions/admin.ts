@@ -37,8 +37,12 @@ export interface Category {
 export interface Exam {
   id: string;
   name: string;
-  category_id: string;
+  description?: string | null;
+  category_id?: string | null;
+  slug?: string | null;
+  image_url?: string | null;
 }
+
 
 export interface Subject {
   id: string;
@@ -565,7 +569,7 @@ export async function getExamsSubjectsTopics(): Promise<ExamsSubjectsTopicsRespo
 
     // 2️⃣ Exams
     const [examsResult] = await db.query(
-      `SELECT id, name, category_id FROM exams ORDER BY name ASC`
+      `SELECT id, name, description, slug, image_url, category_id FROM exams ORDER BY name ASC`
     );
     const exams = examsResult as Exam[];
 
@@ -883,7 +887,7 @@ export async function deleteExamCategory(id: number) {
 export async function getAllExams() {
   try {
     const [rows] = await db!.query(
-      `SELECT id, name, category_id FROM exams ORDER BY id DESC`
+      `SELECT id, name, description, slug, image_url, category_id FROM exams ORDER BY id DESC`
     );
 
     return rows;
@@ -894,17 +898,60 @@ export async function getAllExams() {
 }
 
 export async function deleteExam(id: number) {
+  const connection = await db!.getConnection();
+
   try {
-    await db!.query(`DELETE FROM exams WHERE id = ?`, [id]);
+    await connection.beginTransaction();
+
+    // 1️⃣ Delete dependent subjects first
+    await connection.query(
+      `DELETE FROM subjects WHERE exam_id = ?`,
+      [id]
+    );
+
+    // (future ready)
+    // If later you add FK from questions → exams, add here
+    // await connection.query(`DELETE FROM questions WHERE exam_id = ?`, [id]);
+
+    // 2️⃣ Delete exam
+    await connection.query(
+      `DELETE FROM exams WHERE id = ?`,
+      [id]
+    );
+
+    await connection.commit();
 
     revalidatePath("/admin/manage");
 
-    return { success: true };
+    return {
+      success: true,
+      message: "Exam deleted successfully",
+    };
   } catch (error: any) {
-    logger.error("deleteExam error", error);
-    return { success: false, error: error.message };
+    await connection.rollback();
+
+    logger.error("deleteExam failed", {
+      message: error.message,
+      stack: error.stack,
+    });
+
+    if (error.code === "ER_ROW_IS_REFERENCED_2") {
+      return {
+        success: false,
+        error:
+          "Cannot delete exam because related data exists",
+      };
+    }
+
+    return {
+      success: false,
+      error: "Failed to delete exam",
+    };
+  } finally {
+    connection.release();
   }
 }
+
 
 
 export async function getAllSubjects() {
